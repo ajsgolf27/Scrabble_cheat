@@ -33,50 +33,26 @@ public class scrabble_main {
 	public static void main(String[] args) throws IOException {
 
 
-		Vector<String> mainWords = new Vector<String>();
 		Vector<String> returnedWords = new Vector<String>();
+		Vector<String> returnedSmallWords = new Vector<String>();
 		
-		scrabble_Methods sm;
-		sm = new scrabble_Methods();
-		
-		
-		sm.openFiles();
-		sm.enterWords();
-		sm.matchBySize();
-		sm.refineWordsList();
-		
-		// adds the list to a LinkedHashSet because it doesn't allow duplicate strings
-		// therefore reducing the size of the list by 98.5% in turn optimizing performance.
-		mainWords.addAll(sm.smallWordsList());
-		Collection<String> noDuplicateStrings = new LinkedHashSet<String>(mainWords);
-		mainWords.clear();
-		mainWords.addAll(noDuplicateStrings);
-
-		// passes in each word to be checked against the library
-		for( int x = 0; x< mainWords.size(); x++){
-
-			sm.checkSubWords(mainWords.get(x));
+		Anagrams an;
+		an = new Anagrams();
+		an.openFiles();
+		an.enterWords();
+		an.matchBySize();
+		returnedSmallWords.addAll(an.smallWordsList());
+		for (int j = 0; j < returnedSmallWords.size(); j++){
+			an.checkSubWords(returnedSmallWords.get(j));
 		}
+		returnedWords.addAll(an.returnedWords());
 		
-		// get the list of all the possible words
-		returnedWords.addAll(sm.returnedWords());
-
-		// adds the words to a TreeSet to organize by alphabetical order
-		TreeSet<String> treeset = new TreeSet<String>();
-		treeset.addAll(returnedWords);
-		returnedWords.clear();
-		returnedWords.addAll(treeset);
-		
-		//prints the possible words to the console
 		for (String returnedWord: returnedWords){
 
 			System.out.println(returnedWord);
 
 		}
-		
-		
-		
-
+	
 
 	}
 

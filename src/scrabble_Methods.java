@@ -29,320 +29,292 @@ import java.util.Vector;
 
 public class scrabble_Methods {
 
-	private Vector<String> wordsList = new Vector<String>();
-	private Vector<String> sizeMatch = new Vector<String>();
-	private Vector<String> smallerWordsList = new Vector<String>();
-	private Vector<String> returnedWordsList = new Vector<String>();
-	private Vector <String> betterList = new Vector<String>();
 	private File words = new File("A Words.txt");
-	private String Compare;
+	private Vector<String> dictionaryList = new Vector<String>();
+	private Vector<String> sameSize = new Vector<String>();
 	private String userLetters;
-	private String word;
-	private char individualLettersFromUser;
 	private String userLettersLowerCase;
+	private String wordInDictionaryList;
+	private char individualLettersFromUser;
+	private String wordFromSameSizeList;
+	private Vector<String> returnedWordsList = new Vector<String>();
+	private Vector<String> smallerWordsList = new Vector<String>();
+	private Collection<String> noDuplicateStrings = new LinkedHashSet<String>();
+	private Collection<String> checkSmallerWords = new LinkedHashSet<String>();
+	
 	
 	// opens the file containing the words and saves them to a vector
-	public void openFiles() throws IOException{
-		Scanner Files = new Scanner(words);
-		while(Files.hasNext()){
-			String wordsInFile = Files.nextLine().trim();
-			wordsList.add(wordsInFile);
-
-
+		public void openFiles() throws IOException{
+			Scanner Files = new Scanner(words);
+			while(Files.hasNext()){
+				String wordsInFile = Files.nextLine().trim();
+				dictionaryList.add(wordsInFile);
+			}
+			Files.close();
 		}
-		Files.close();
-
-	}
-
-	// takes the users input 
-	public void enterWords(){
-		System.out.println("Please enter your letters");
-		Scanner userInput = new Scanner( System.in );
-		userLetters = userInput.next();
-		userLettersLowerCase = userLetters.toLowerCase();
-		userInput.close();
 		
-	}
-	// only uses words of the same or less amount of letters as the input word
-	public void matchBySize(){
-		for(int i = 0; i < wordsList.size(); i++){
-			Compare = wordsList.get(i);
-			if(Compare.length() <= userLetters.length() ){
-				sizeMatch.add(Compare);
+		// takes the users input 
+		public void enterWords(){
+			System.out.println("Please enter your letters");
+			Scanner userInput = new Scanner( System.in );
+			userLetters = userInput.next();
+			userLettersLowerCase = userLetters.toLowerCase();
+			userInput.close();
+		}
+		
+		public void matchBySize(){
+			for(int ij = 0; ij < dictionaryList.size(); ij++){
+				wordInDictionaryList = dictionaryList.get(ij);
+				if(wordInDictionaryList.length() <= userLetters.length() ){
+					sameSize.add(wordInDictionaryList);
+				}
 			}
 		}
 		
-	}
-	//narrows down the list created based on size by throwing out words
-	// that do not contain the same characters
-	public void refineWordsList(){
-		String check;
-		String s = " ";
+		public Vector <String> smallWordsList(){
 
-		for(int x = 0; x < sizeMatch.size(); x++){
-			check = sizeMatch.get(x);
+			String smallWord;
+			String smallerWord;
+			char smallLetter;
+			int length;
+			smallerWordsList.add(userLettersLowerCase);
+			// takes the user letters and takes every away a letter to make smaller letter 
+			// combinations 
+			for(int x3 = 0; x3 < smallerWordsList.size(); x3++){
+
+				smallWord = smallerWordsList.get(x3);
+				length = smallWord.length();
+				StringBuilder sb = new StringBuilder(smallWord);
+				for (int x4 = 0; x4 < length; x4++){
+					smallLetter = sb.charAt(0);
+					sb.deleteCharAt(0);
+					smallerWord = sb.toString();
+					if(sb.length() < 2){
+					}else{
+						smallerWordsList.add(smallerWord);
+					}
+					sb.append(smallLetter);
+				}
+
+			}
 			
-			for(int i = 0; i < userLettersLowerCase.length(); i++){
-				StringBuilder sb = new StringBuilder(s);
-				sb.append(userLettersLowerCase.charAt(i));
-
-
-				if(check.contains(sb)){
-
-				}else{
-					betterList.add(check);
-				}
-
-			}
+			checkSmallerWords.addAll(smallerWordsList);
+			smallerWordsList.clear();
+			smallerWordsList.addAll(checkSmallerWords);
+			return smallerWordsList;
+			
 		}
-	}
 
-	public Vector<String> smallWordsList(){
-
-		String smallWord;
-		String smallerWord;
-		char smallLetter;
-		int length;
-		smallerWordsList.add(userLettersLowerCase);
-		// takes the user letters and takes every away a letter to make smaller letter 
-		// combinations 
-		for(int x3 = 0; x3 < smallerWordsList.size(); x3++){
-
-			smallWord = smallerWordsList.get(x3);
-			length = smallWord.length();
-			StringBuilder sb = new StringBuilder(smallWord);
-			for (int x4 = 0; x4 < length; x4++){
-				smallLetter = sb.charAt(0);
-				sb.deleteCharAt(0);
-				smallerWord = sb.toString();
-				if(sb.length() < 2){
-				}else{
-					smallerWordsList.add(smallerWord);
-				}
-				sb.append(smallLetter);
-			}
-
-		}
-		return smallerWordsList;
-	}
-	
-	
-	//checks all the words
-	public void checkSubWords (String newWord){
-		String qword;
-		qword = newWord;
-
-		
-		char letter;
-		
-		 int a = 0, b = 0, c = 0, d = 0, e = 0,  f = 0, g = 0, h = 0, i = 0,
-					j = 0, k = 0, l = 0, m = 0, n = 0, o = 0, p = 0,  q = 0, r = 0, s = 0,
-					t = 0, u = 0, v = 0, w = 0, x = 0,  y = 0,  z = 0,  a2 = 0, b2 = 0, c2 = 0,
-					d2 = 0, e2 = 0, f2 = 0, g2 = 0, h2 = 0, i2 = 0, j2 = 0, k2 = 0, l2 = 0, m2 = 0, 
-					n2 = 0, o2 = 0, p2 = 0, q2 = 0, r2 = 0, s2 = 0, t2 = 0,  u2 = 0,  v2 = 0, w2 = 0,
-					x2 = 0, y2 = 0, z2 = 0;
+		//checks all the words
+		public void checkSubWords (String word){
+			 String fromSmallwordsList = word;
+			char letter;
+			
+			 int a = 0, b = 0, c = 0, d = 0, e = 0,  f = 0, g = 0, h = 0, i = 0,
+						j = 0, k = 0, l = 0, m = 0, n = 0, o = 0, p = 0,  q = 0, r = 0, s = 0,
+						t = 0, u = 0, v = 0, w = 0, x = 0,  y = 0,  z = 0,  a2 = 0, b2 = 0, c2 = 0,
+						d2 = 0, e2 = 0, f2 = 0, g2 = 0, h2 = 0, i2 = 0, j2 = 0, k2 = 0, l2 = 0, m2 = 0, 
+						n2 = 0, o2 = 0, p2 = 0, q2 = 0, r2 = 0, s2 = 0, t2 = 0,  u2 = 0,  v2 = 0, w2 = 0,
+						x2 = 0, y2 = 0, z2 = 0;
 
 
-		// add the value of the user given letters
-		for(int x1 = 0; x1 < qword.length(); x1++){
-			individualLettersFromUser = qword.charAt(x1);
+			// add the value of the user given letters
+			for(int jk = 0; jk < fromSmallwordsList.length(); jk++){
+				individualLettersFromUser = fromSmallwordsList.charAt(jk);
 
-			switch(individualLettersFromUser){
-			case 'a':
-				a++;
-				break;
-			case 'b':
-				b++;
-				break;
-			case 'c':
-				c++;
-				break;
-			case 'd':
-				d++;
-				break;
-			case 'e':
-				e++;
-				break;
-			case 'f':
-				f++;
-				break;
-			case'g':
-				g++;
-				break;
-			case 'h':
-				h++;
-				break;
-			case 'i':
-				i++;
-				break;
-			case 'j':
-				j++;
-				break;
-			case 'k':
-				k++;
-				break;
-			case 'l':
-				l++;
-				break;
-			case 'm':
-				m++;
-				break;
-			case 'n':
-				n++;
-				break;
-			case 'o':
-				o++;
-				break;
-			case 'p':
-				p++;
-				break;
-			case 'q':
-				q++;
-				break;
-			case 'r':
-				r++;
-				break;
-			case 's':
-				s++;
-				break;
-			case 't':
-				t++;
-				break;
-			case 'u':
-				u++;
-				break;
-			case 'v':
-				v++;
-				break;
-			case 'w':
-				w++;
-				break;
-			case 'x':
-				x++;
-				break;
-			case 'y':
-				y++;
-				break;
-			case 'z':
-				z++;
-				break;
-
-			}
-
-		}
-		//go through the word list to compare the number of each letter 
-		for(int i3 = 0; i3 < betterList.size(); i3++){
-			word = betterList.get(i3);
-			for(int x3 = 0; x3 < word.length(); x3++){
-				letter = word.charAt(x3);
-
-				switch(letter){
+				switch(individualLettersFromUser){
 				case 'a':
-					a2++;
+					a++;
 					break;
 				case 'b':
-					b2++;
+					b++;
 					break;
 				case 'c':
-					c2++;
+					c++;
 					break;
 				case 'd':
-					d2++;
+					d++;
 					break;
 				case 'e':
-					e2++;
+					e++;
 					break;
 				case 'f':
-					f2++;
+					f++;
 					break;
 				case'g':
-					g2++;
+					g++;
 					break;
 				case 'h':
-					h2++;
+					h++;
 					break;
 				case 'i':
-					i2++;
+					i++;
 					break;
 				case 'j':
-					j2++;
+					j++;
 					break;
 				case 'k':
-					k2++;
+					k++;
 					break;
 				case 'l':
-					l2++;
+					l++;
 					break;
 				case 'm':
-					m2++;
+					m++;
 					break;
 				case 'n':
-					n2++;
+					n++;
 					break;
 				case 'o':
-					o2++;
+					o++;
 					break;
 				case 'p':
-					p2++;
+					p++;
 					break;
 				case 'q':
-					q2++;
+					q++;
 					break;
 				case 'r':
-					r2++;
+					r++;
 					break;
 				case 's':
-					s2++;
+					s++;
 					break;
 				case 't':
-					t2++;
+					t++;
 					break;
 				case 'u':
-					u2++;
+					u++;
 					break;
 				case 'v':
-					v2++;
+					v++;
 					break;
 				case 'w':
-					w2++;
+					w++;
 					break;
 				case 'x':
-					x2++;
+					x++;
 					break;
 				case 'y':
-					y2++;
+					y++;
 					break;
 				case 'z':
-					z2++;
+					z++;
 					break;
+				}
+			}
+		
+			//go through the word list to compare the number of each letter 
+			for(int hk = 0; hk < sameSize.size(); hk++){
+				wordFromSameSizeList = sameSize.get(hk);
+				for(int hlk = 0; hlk < wordFromSameSizeList.length(); hlk++){
+					letter = wordFromSameSizeList.charAt(hlk);
+
+					switch(letter){
+					case 'a':
+						a2++;
+						break;
+					case 'b':
+						b2++;
+						break;
+					case 'c':
+						c2++;
+						break;
+					case 'd':
+						d2++;
+						break;
+					case 'e':
+						e2++;
+						break;
+					case 'f':
+						f2++;
+						break;
+					case'g':
+						g2++;
+						break;
+					case 'h':
+						h2++;
+						break;
+					case 'i':
+						i2++;
+						break;
+					case 'j':
+						j2++;
+						break;
+					case 'k':
+						k2++;
+						break;
+					case 'l':
+						l2++;
+						break;
+					case 'm':
+						m2++;
+						break;
+					case 'n':
+						n2++;
+						break;
+					case 'o':
+						o2++;
+						break;
+					case 'p':
+						p2++;
+						break;
+					case 'q':
+						q2++;
+						break;
+					case 'r':
+						r2++;
+						break;
+					case 's':
+						s2++;
+						break;
+					case 't':
+						t2++;
+						break;
+					case 'u':
+						u2++;
+						break;
+					case 'v':
+						v2++;
+						break;
+					case 'w':
+						w2++;
+						break;
+					case 'x':
+						x2++;
+						break;
+					case 'y':
+						y2++;
+						break;
+					case 'z':
+						z2++;
+						break;
+
+					}
 
 				}
-
-			}
-
-
-
-			
-			if (a == a2 && b == b2 && c == c2 && d == d2 && e == e2 && f == f2 && g == g2 && h == h2 && i == i2 && j == j2 && k == k2 && l == l2 && m == m2 && n == n2 && o == o2 && p == p2 && q == q2 && r == r2 && s == s2 && t == t2 && u == u2 && v == v2 && w == w2 && x == x2 && y == y2 && z == z2 ){
-				// adds the match to a vector to be returned later
-				returnedWordsList.addElement(word);
-			}
-
-			a2 = 0; b2 = 0; c2 = 0; d2 = 0; e2 = 0; f2 = 0; g2 = 0;
-			h2 = 0; i2 = 0; j2 = 0; k2 = 0; l2 = 0; m2 = 0; n2 = 0;
-			o2 = 0; p2 = 0; q2 = 0; r2 = 0; s2 = 0; t2 = 0; u2 = 0;
-			v2 = 0; w2 = 0; x2 = 0; y2 = 0; z2 = 0;
-
-
-		}	
-
-	}
-	//return the vector of matched words
-	public Vector<String>  returnedWords(){
+				
+				if (a == a2 && b == b2 && c == c2 && d == d2 && e == e2 && f == f2 && g == g2 && h == h2 && i == i2 && j == j2 && k == k2 && l == l2 && m == m2 && n == n2 && o == o2 && p == p2 && q == q2 && r == r2 && s == s2 && t == t2 && u == u2 && v == v2 && w == w2 && x == x2 && y == y2 && z == z2 ){
+					// adds the match to a vector to be returned later
+					noDuplicateStrings.add(wordFromSameSizeList);
+					//returnedWordsList.addElement(wordFromSameSizeList);
+				}
+				
+				a2 = 0; b2 = 0; c2 = 0; d2 = 0; e2 = 0; f2 = 0; g2 = 0;
+				h2 = 0; i2 = 0; j2 = 0; k2 = 0; l2 = 0; m2 = 0; n2 = 0;
+				o2 = 0; p2 = 0; q2 = 0; r2 = 0; s2 = 0; t2 = 0; u2 = 0;
+				v2 = 0; w2 = 0; x2 = 0; y2 = 0; z2 = 0;
+			}	
+		}
 		
-		return returnedWordsList;
+		//return the vector of matched words
+		public Vector <String>  returnedWords(){
+			returnedWordsList.addAll(noDuplicateStrings);
+			return returnedWordsList;
 
-	}
+		}
+
+
 
 }
 
