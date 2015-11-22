@@ -1,3 +1,4 @@
+package scrabble;
 /*The MIT License (MIT)
 
 Copyright (c) [2015] [Andrew Stallone]
@@ -24,6 +25,8 @@ SOFTWARE.*/
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 import java.util.Scanner;
 import java.util.Vector;
 
@@ -106,6 +109,8 @@ public class scrabble_Methods {
 		}
 
 		//checks all the words
+		//this works by counting the letters in the word being compared, so if the 2 words have 
+		//the same amount of letters you have found a match. 
 		public void checkSubWords (String word){
 			 String fromSmallwordsList = word;
 			char letter;

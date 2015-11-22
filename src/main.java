@@ -1,3 +1,4 @@
+
 /*The MIT License (MIT)
 
 Copyright (c) [2015] [Andrew Stallone]
@@ -19,16 +20,13 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.*/
-
+package scrabble;
 
 import java.io.IOException;
-import java.util.Collection;
-import java.util.LinkedHashSet;
-import java.util.TreeSet;
 import java.util.Vector;
 
 
-public class scrabble_main {
+public class main {
 
 	public static void main(String[] args) throws IOException {
 
@@ -36,8 +34,8 @@ public class scrabble_main {
 		Vector<String> returnedWords = new Vector<String>();
 		Vector<String> returnedSmallWords = new Vector<String>();
 		
-		Anagrams an;
-		an = new Anagrams();
+		scrabble_Methods an;
+		an = new scrabble_Methods();
 		an.openFiles();
 		an.enterWords();
 		an.matchBySize();
